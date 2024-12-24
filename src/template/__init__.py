@@ -53,5 +53,7 @@ Rye is required as a system application to use this template. See official
 * automatic testing using GitHub Actions. It runs on every push to the repository into `main` branch and checks your
     code with all configured tools. You can change it in `.github/workflows` directory.
 * automatic deployment of documentation to GitHub Pages. It runs on every push to the repository into `main` branch
-    and deploys documentation as static HTML. You can change it in `.github/workflows` directory.
+    and deploys documentation as static HTML. You can change it in `.github/workflows` directory. Ensure you have
+    activated GitHub Pages in your repository settings and switched it deployment to "GitHub Actions" in the same
+    settings.
 """  # noqa: D415

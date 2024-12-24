@@ -1,0 +1,96 @@
+[project]
+name = "template"
+version = "1.0.0"
+description = "Default project template to use for new python projects with Rye and hosted on GitHub"
+dependencies = []
+readme = "README.md"
+requires-python = ">= 3.13"
+
+license = { text = "BSD-3-Clause" }
+authors = [
+    { name = "Author Name", email = "author.name@example.com" },
+]
+keywords = [ ]
+
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+]
+
+urls = { Homepage = "https://github.com/JCorrDevelopment/Template", Repository = "https://github.com/JCorrDevelopment/Template", IssueTracker = "https://github.com/JCorrDevelopment/Template" }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/template"]
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "ruff>=0.8.2",
+    "mypy>=1.13.0",
+    "pytest>=8.3.4",
+    # Required for pycharm because of a bug with RyeCharm plugin
+    "pip>=24.3.1",
+    "pdoc>=15.0.1",
+]
+
+[tool.rye.scripts]
+format = { chain = ["format:upgrade", "format:isort", "format:black", "format:flake8-errors"] }
+"format:upgrade" = "ruff check --select UP --fix-only"
+"format:isort" = "ruff check --select I --fix-only"
+"format:flake8-errors" = "ruff check --fix-only"
+"format:black" = "ruff format"
+lint = { chain = ["lint:ruff-format", "lint:ruff", "lint:mypy"] }
+"lint:ruff-format" = "ruff format --check"
+"lint:ruff" = "ruff check"
+"lint:mypy" = "mypy ."
+pre-commit = { chain = ["format", "lint", "test", "docs"] }
+"test:pytest" = "pytest . -vv"
+test = { chain = ["test:pytest"] }
+setup = { chain = ["setup:install"] }
+"setup:install" = "rye sync"
+docs = { chain = ["docs:pdoc"] }
+"docs:pdoc" = {cmd = "pdoc ./src/template -o ./docs/ --docformat google"}
+"docs:pdoc-server" = {cmd = "pdoc ./src/template ./docs/ --docformat google"}
+
+
+[tool.ruff]
+line-length = 120
+target-version = "py313"
+
+[tool.ruff.lint]
+extend-select = [
+    "W", "E", "F", "I", "N", "D", "UP", "YTT", "ANN", "ASYNC", "S",
+    "BLE", "FBT", "B", "A", "C4", "DTZ", "T10", "EM", "FA", "G", "LOG",
+    "INP", "PIE", "T20", "RET", "SLOT", "SIM", "TC", "ARG", "PTH", "TD",
+    "PGH", "PL", "R", "TRY", "FLY", "PERF", "FURB", "DOC", "RUF"
+]
+extend-ignore = [
+    "D100", # Missing docstring in public module; Just annoying and not useful
+    "D107", # Missing docstring in __init__. This is not required, better to write is a class docstring
+    "D203", # No blank lines allowed before function docstring
+    "D212", # Multi-line docstring summary should start at the second line
+    "PLR6301", # Do not validate the `this method may be static` rule as it is not useful
+]
+preview = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"**/__init__.py" = ["D104"]
+"canvas.py" = ["ALL"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+exclude = ["canvas.py"]

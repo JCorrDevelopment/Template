@@ -1,0 +1,33 @@
+name: Python application
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ "3.13" ]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: eifinger/setup-rye@v4
+        id: setup-rye
+        with:
+          enable-cache: true
+          cache-prefix: ${{ matrix.python-version }}
+      - name: Pin python-version ${{ matrix.python-version }}
+        run: rye pin ${{ matrix.python-version }}
+      - name: Install dependencies
+        if: steps.setup-rye.outputs.cache-hit != 'true'
+        run: |
+          rye sync --no-lock
+      - name: Checking out code by linting rules
+        run: |
+          rye run lint
+      - name: Run tests
+        run: |
+          rye run test

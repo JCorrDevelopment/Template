@@ -1,5 +1,5 @@
 """
-# Template
+# [Template](https://github.com/JCorrDevelopment/Template)
 
 Default template to start a new python project
 

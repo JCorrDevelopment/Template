@@ -76,7 +76,8 @@ Additionally, there is a bunch of predefined scripts in `pyproject.toml` file:
 - `rye run lint:ruff-format` - runs ruff formatter check on your code.
 - `rye run lint:ruff` - runs ruff linters on your code.
 - `rye run lint:mypy` - runs mypy type checker on your code.
-- `rye run test` - runs tests in your code. It searches for tests in `src/` directory. Use `pytest` as testing framework.
+- `rye run test` - runs tests in your code. It searches for tests in `src/` directory.
+    Use `pytest` as testing framework.
 - `rye run test:pytest` - runs tests in your code using `pytest` as testing framework.
 - `rye run setup` - set up your project for development. Currently, it's just mirroring `rye sync --update-all` command.
 - `rye run docs` - generate documentation for your project. Currently, is uses `pdoc` to generate documentation in html

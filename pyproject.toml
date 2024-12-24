@@ -57,7 +57,7 @@ pre-commit = { chain = ["format", "lint", "test", "docs"] }
 "test:pytest" = "pytest . -vv"
 test = { chain = ["test:pytest"] }
 setup = { chain = ["setup:install"] }
-"setup:install" = "rye sync"
+"setup:install" = "rye sync --update-all"
 docs = { chain = ["docs:pdoc"] }
 "docs:pdoc" = {cmd = "pdoc ./src/template -o ./docs/ --docformat google"}
 "docs:pdoc-server" = {cmd = "pdoc ./src/template ./docs/ --docformat google"}

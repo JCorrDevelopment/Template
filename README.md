@@ -29,7 +29,7 @@ Rye is required as a system application to use this template. See official
     and replace it with your project name. Target files are:
     * `pyproject.toml`
     * main `template/` directory under `src/`
-3. Run `rye sync --update-all` to create a project virtual environment and install all dependencies and tools 
+3. Run `rye run setup` to create a project virtual environment and install all dependencies and tools 
     in up-to-date versions.
 4. Update `{your_project_name}/__init__.py` file with document string specifying your project guidelines.
     This information will be used by pdoc to generate main page for your project documentation.
@@ -55,3 +55,39 @@ Rye is required as a system application to use this template. See official
     and deploys documentation as static HTML. You can change it in `.github/workflows` directory. Ensure you have
     activated GitHub Pages in your repository settings and switched it deployment to "GitHub Actions" in the same
     settings.
+
+
+## Predefined commands.
+
+Application supports all commands from `rye`, as it required to be installed for this template to work.
+
+Additionally, there is a bunch of predefined scripts in `pyproject.toml` file:
+
+- `rye run format` - runs ruff to format your code. It applies ruff implementation of black, isort and pyupgrade 
+    to your code.
+- `rye run format:upgrade` - safely upgrade your code to specified python version's syntax. It uses ruff implementation 
+    of pyupgrade to do this.
+- `rye run format:isort` - sort your imports in the code. It uses ruff implementation of isort to do this.
+- `rye run format:flake8-errors` - safely resolve linting errors in your code. It uses ruff linting implementation 
+    of flake8 to do this.
+- `rye run format:black` - format your code to PEP-8 styleguide. It uses ruff implementation of formatter to do this.
+- `rye run lint` - runs linting tools on your code. It applies ruff linters, ruff formatter check and mypy type checker.
+- `rye run lint:ruff-format` - runs ruff formatter check on your code.
+- `rye run lint:ruff` - runs ruff linters on your code.
+- `rye run lint:mypy` - runs mypy type checker on your code.
+- `rye run test` - runs tests in your code. It searches for tests in `src/` directory. Use `pytest` as testing framework.
+- `rye run test:pytest` - runs tests in your code using `pytest` as testing framework.
+- `rye run setup` - set up your project for development. Currently, it's just mirroring `rye sync --update-all` command.
+- `rye run docs` - generate documentation for your project. Currently, is uses `pdoc` to generate documentation in html 
+    format and saves it to `docs` directory.
+- `rue run docs:pdoc` - generate documentation for your project using `pdoc` tool.
+- `docs:pdoc-server` - run local server to preview your documentation. It uses `pdoc` server to do this.
+
+
+## Contributing
+
+Following to conventional commits specification is required to contribute to this project. 
+See [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) for more details.
+
+Important as well is keeping in sync `README.md` file with the `template/__init__.py` file, as it's used by `pdoc`
+to generate main page for your project documentation.
